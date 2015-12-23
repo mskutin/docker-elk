@@ -1,9 +1,12 @@
 elasticsearch:
   image: elasticsearch:latest
-  command: elasticsearch -Des.network.host=0.0.0.0
+  command: elasticsearch -Des.network.host=_non_loopback_
   ports:
     - "9200:9200"
     - "9300:9300"
+  volumes:
+    - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    - /data:/usr/share/elasticsearch/data
 logstash:
   image: logstash:latest
   command: logstash -f /etc/logstash/conf.d/logstash.conf
